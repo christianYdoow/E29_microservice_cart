@@ -35,16 +35,6 @@ public class CartService {
         UserDto userDto=restTemplate.getForObject("http://localhost:8081/api/users"+userId,UserDto.class);
         return userDto.getUserId();
     }
-    private Boolean isRoleBuyer(Cart cart){
-        String userRole=getClientUserByRole(cart.getUserId());
-        String regex="(?i)buyer";Pattern pattern=Pattern.compile(regex);
-        Matcher match=pattern.matcher(userRole);
-        if(match.matches()){
-            return  true;
-        }else {
-            return false;
-        }
-    }
 
     //-------------------------------------post new cart item-------------------------------------
     public ResponseEntity<HttpStatus> postCart(Cart cart){
