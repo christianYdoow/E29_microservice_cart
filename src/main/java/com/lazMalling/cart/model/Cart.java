@@ -19,13 +19,13 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long cartId;
 
-    @Column(name = "user_id")
+    @Column(name = "cart_userId")
     private long userId;
 
-    @Column(name = "product_id")
+    @Column(name = "cart_productId")
     private long productId;
 
-    @Column(name = "product_quantity")
+    @Column(name = "cart_quantity")
     private long quantity;
 
 }

@@ -4,44 +4,40 @@ package com.lazMalling.cart.controller;
 import com.lazMalling.cart.model.Cart;
 import com.lazMalling.cart.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.RequestEntity;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
 public class CartController {
 
-
     @Autowired
-    private final CartService cartService;
-
-    public CartController(CartService cartService) {
-        this.cartService = cartService;
-    }
+    private CartService cartService;
 
     @PostMapping("/cart")
-    public @ResponseBody String postCart(@RequestParam long userId,
-                                         @RequestParam long productId,
-                                         @RequestParam long quantity){
-        return cartService.postCart(userId,productId,quantity);
+    public @ResponseBody ResponseEntity<HttpStatus>postCart(@RequestBody Cart cart){
+        return cartService.postCart(cart);
     }
-    @GetMapping("/cart")
-    public List<Cart> getAllCart(){
+
+    @GetMapping("getAllCart")
+    public   List<Cart> getAllCart(){
         return cartService.getAllCart();
     }
 
-    @GetMapping("/cart/{cartId}")
-    public Optional<Cart> getCartById(@PathVariable long cartId){
-        return cartService.getCartById(cartId);
+    @GetMapping("/getCartByUserId/{userId}")
+    public List<Cart> getCartByUserId(@PathVariable long userId){
+        return cartService.getCartByUserId(userId);
     }
-    @PutMapping("/cart/{cartId}")
-    public Cart updateCartById(@PathVariable long cartId , @RequestBody Cart cart){
-        return cartService.updateCartById(cartId,cart);
+    @PutMapping("/updateCartItemById/{cartId}")
+    public ResponseEntity<HttpStatus> updateCartItemById(@PathVariable long cartId,@RequestBody Cart cart){
+        return cartService.updateCartItemById(cartId,cart);
     }
-    @DeleteMapping("/cart/{cartId}")
-    public void deleteCartById(@PathVariable long cartId){
-        cartService.deleteCartById(cartId);
+    @DeleteMapping("/deleteCartItemById/{cartId}")
+    public ResponseEntity<HttpStatus> deleteCartItemById(@PathVariable long cartId){
+        return cartService.deleteCartItemById(cartId);
     }
 }
